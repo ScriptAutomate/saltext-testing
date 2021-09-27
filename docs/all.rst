@@ -8,9 +8,3 @@ Complete List of saltext-testing
    :maxdepth: 2
 
    ref/modules.rst
-
-
-.. toctree::
-   :maxdepth: 2
-
-   ref/states.rst
