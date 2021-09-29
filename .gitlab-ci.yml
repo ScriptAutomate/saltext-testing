@@ -7,7 +7,7 @@ build-docs:       # This job runs in the build-docs stage, which runs first.
   image: python:3.8
   script:
     - pip install -U pip setuptools wheel nox
-    - nox -e 'docs-html(include_api_docs=True, clean=True)'
+    - nox -e 'docs-html(include_api_docs=False, clean=True)'
     - mv docs/_build/html html
   artifacts:
     paths:
