@@ -1,0 +1,26 @@
+stages:          # List of stages for jobs, and their order of execution
+  - build-docs
+  - publish-docs
+
+build-docs:       # This job runs in the build-docs stage, which runs first.
+  stage: build-docs
+  image: python:3.8
+  script:
+    - pip install -U pip setuptools wheel nox
+    - nox -e 'docs-html(include_api_docs=True, clean=True)'
+    - mv docs/_build/html html
+  artifacts:
+    paths:
+      - html
+    expire_in: 30 days
+
+pages:   # This job runs in the publish-docs stage.
+  stage: publish-docs    # It only starts when the job in the build-docs stage completes successfully.
+  image: debian:bullseye-slim
+  script:
+    - mv html public
+    - 'echo "Gitlab Pages available at: ${CI_PAGES_URL}"'
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
